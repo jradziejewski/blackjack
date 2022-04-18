@@ -3,5 +3,6 @@
 #include "Casino.h"
 
 int main() {
-	Casino casino();
+	Casino casino = Casino();
+	casino.displayDeck();
 }

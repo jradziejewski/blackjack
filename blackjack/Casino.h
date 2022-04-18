@@ -8,5 +8,6 @@ private:
 	Card cards[52];
 public:
 	Casino();
+	void displayDeck();
 };
 
