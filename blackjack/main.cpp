@@ -1,18 +1,15 @@
 #include <iostream>
 #include "Card.h"
 #include "Casino.h"
+#include "Player.h"
 
 int main() {
 	srand(time(NULL));
 	Casino casino = Casino();
-	for (int i = 0; i < 52; i++) {
-		casino.getCard().display();
-		std::cout << std::endl;
+
+	Player player = Player();
+	for (int i = 0; i < 13; i++) {
+		player.getCard(casino);
 	}
-	casino.shuffleDeck();
-	std::cout << "\n\n\n\n";
-	for (int i = 0; i < 52; i++) {
-		casino.getCard().display();
-		std::cout << std::endl;
-	}
+	player.displayCards();
 }
