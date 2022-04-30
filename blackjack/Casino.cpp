@@ -1,11 +1,48 @@
 #include "Casino.h"
 
-Casino::Casino() {
+void Casino::resetCards() {
 	for (int i = 0; i < 52; i++) {
-		int newSuit = 0;
-		cards[i].setSuit(newSuit);
-		cards[i].setValue(i % 13);
-		if ((i + 1) % 13 == 0)
-			newSuit++;
+		takenCards[i] = 0;
 	}
+}
+
+Casino::Casino() {
+	int newSuit = 0;
+	for (int i = 0; i < 52; i++) {
+		cards[i] = Card(newSuit, i % 13);
+		if ((i + 1) % 13 == 0) {
+			newSuit++;
+		}
+	}
+	resetCards();
+}
+
+void Casino::shuffleDeck() {
+	resetCards();
+	for (int i = 0; i < 100; i++) {
+		int a = rand() % 52;
+		int b = rand() % 52;
+		Card temp;
+		temp = cards[a];
+		cards[a] = cards[b];
+		cards[b] = temp;
+	}
+}
+
+void Casino::displayDeck() {
+	for (int i = 0; i < 52; i++) {
+		std::cout << i + 1 << ". ";
+		cards[i].display();
+		std::cout << std::endl;
+	}
+}
+
+Card Casino::getCard() {
+	int nrOfCard;
+	do {
+		nrOfCard = rand() % 52;
+	} while (takenCards[nrOfCard] == 1);
+	takenCards[nrOfCard] = 1;
+
+	return cards[nrOfCard];
 }
