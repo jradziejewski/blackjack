@@ -46,3 +46,27 @@ Card Casino::getCard() {
 
 	return cards[nrOfCard];
 }
+
+void Casino::Play() {
+	std::cout << "Player 1: \n";
+	Card temp;
+	if (playerOne.getNumOfCards() < 10) {
+		temp = getCard();
+		playerOne.getCard(&temp);
+	}
+	if (playerOne.getNumOfCards() < 10) {
+		temp = getCard();
+		playerOne.getCard(&temp);
+	}
+	playerOne.displayCards();
+	std::cout << "\nPlayer 2: \n";
+	if (playerTwo.getNumOfCards() < 10) {
+		temp = getCard();
+		playerTwo.getCard(&temp);
+	}
+	if (playerTwo.getNumOfCards() < 10) {
+		temp = getCard();
+		playerTwo.getCard(&temp);
+	}
+	playerTwo.displayCards();
+}

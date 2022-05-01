@@ -7,13 +7,10 @@ void Player::calculatePoints() {
 	}
 }
 
-void Player::getCard(Casino _casino) {
+void Player::getCard(Card* _card) {
 	if (numOfCards < 10) {
-		cards[numOfCards] = _casino.getCard();
+		cards[numOfCards] = *_card;
 		numOfCards++;
-	}
-	else {
-		std::cout << "Your hand is full.\n";
 	}
 }
 
