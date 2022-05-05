@@ -59,6 +59,7 @@ void Casino::Play() {
 		playerOne.getCard(&temp);
 	}
 	playerOne.displayCards();
+	std::cout << "\nPoints : " << playerOne.getPoints();
 	std::cout << "\nPlayer 2: \n";
 	if (playerTwo.getNumOfCards() < 10) {
 		temp = getCard();
@@ -69,4 +70,5 @@ void Casino::Play() {
 		playerTwo.getCard(&temp);
 	}
 	playerTwo.displayCards();
+	std::cout << "\nPoints : " << playerTwo.getPoints();
 }

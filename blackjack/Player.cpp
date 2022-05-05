@@ -1,9 +1,8 @@
 #include "Player.h"
 
 void Player::calculatePoints() {
-	for (int i = 0; i < 10; i++) {
-		try { points += cards[0].getValue(); }
-		catch (const std::exception& e) {};
+	for (int i = 0; i < numOfCards; i++) {
+		points += cards[i].getValue();
 	}
 }
 
