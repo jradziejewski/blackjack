@@ -8,6 +8,7 @@ class Player
 {
 private:
 	Card cards[10];
+	char name[20];
 	int numOfCards;
 	int points;
 	bool didFold;
@@ -20,7 +21,9 @@ public:
 	void displayCards();
 	int getPoints() { calculatePoints(); return points; };
 	bool fold() { didFold = true; };
-	bool getDidFold() { return didFold; };
 	void setDidFold(bool value) { didFold = value; };
+	bool getDidFold() { return didFold; };
+	void setName() { std::cin >> name; }
+	void printName();
 };
 

@@ -20,3 +20,11 @@ void Player::displayCards() {
 		if (i < 9) std::cout << ", ";
 	}
 }
+
+void Player::printName() {
+	int i = 0;
+	while (name[i]) {
+		std::cout << name[i];
+		i++;
+	}
+}
