@@ -16,8 +16,9 @@ private:
 	void resetCards();
 public:
 	Casino();
-	void displayDeck();
 	void shuffleDeck();
+	void displayDeck();
+	void dealCards(Player* player);
 	Card getCard();
 	void Play();
 };

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Casino.h"
 
 void Player::calculatePoints() {
 	for (int i = 0; i < numOfCards; i++) {
@@ -6,9 +7,9 @@ void Player::calculatePoints() {
 	}
 }
 
-void Player::getCard(Card* _card) {
+void Player::getCard(Casino* _casino) {
 	if (numOfCards < 10) {
-		cards[numOfCards] = *_card;
+		cards[numOfCards] = _casino->getCard();
 		numOfCards++;
 	}
 }

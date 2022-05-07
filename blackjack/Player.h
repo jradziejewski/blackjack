@@ -10,14 +10,17 @@ private:
 	Card cards[10];
 	int numOfCards;
 	int points;
-	bool didPass;
+	bool didFold;
 
 	void calculatePoints();
 public:
-	Player() : numOfCards(0), points(0), didPass(false) {};
-	void getCard(Card* _casino);
+	Player() : numOfCards(0), points(0), didFold(false) {};
+	void getCard(Casino* _casino);
 	int getNumOfCards() { return numOfCards; };
 	void displayCards();
 	int getPoints() { calculatePoints(); return points; };
+	bool fold() { didFold = true; };
+	bool getDidFold() { return didFold; };
+	void setDidFold(bool value) { didFold = value; };
 };
 

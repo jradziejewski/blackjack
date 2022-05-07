@@ -37,6 +37,13 @@ void Casino::displayDeck() {
 	}
 }
 
+void Casino::dealCards(Player* _player) {
+	if (_player->getNumOfCards() >= 10) return;
+
+	_player->getCard(this);
+	_player->getCard(this);
+}
+
 Card Casino::getCard() {
 	int nrOfCard;
 	do {
@@ -48,27 +55,23 @@ Card Casino::getCard() {
 }
 
 void Casino::Play() {
+	bool _boolValue;
 	std::cout << "Player 1: \n";
-	Card temp;
-	if (playerOne.getNumOfCards() < 10) {
-		temp = getCard();
-		playerOne.getCard(&temp);
-	}
-	if (playerOne.getNumOfCards() < 10) {
-		temp = getCard();
-		playerOne.getCard(&temp);
-	}
+	dealCards(&playerOne);
 	playerOne.displayCards();
 	std::cout << "\nPoints : " << playerOne.getPoints();
 	std::cout << "\nPlayer 2: \n";
-	if (playerTwo.getNumOfCards() < 10) {
-		temp = getCard();
-		playerTwo.getCard(&temp);
-	}
-	if (playerTwo.getNumOfCards() < 10) {
-		temp = getCard();
-		playerTwo.getCard(&temp);
-	}
+	dealCards(&playerTwo);
 	playerTwo.displayCards();
 	std::cout << "\nPoints : " << playerTwo.getPoints();
+	while (!playerOne.getDidFold() && !playerTwo.getDidFold()) {
+		playerOne.getCard(this);
+		playerOne.displayCards();
+		std::cin >> _boolValue;
+		playerOne.setDidFold(_boolValue);
+		playerTwo.getCard(this);
+		playerTwo.displayCards();
+		std::cin >> _boolValue;
+		playerTwo.setDidFold(_boolValue);
+	}
 }
