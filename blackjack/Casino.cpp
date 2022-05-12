@@ -67,9 +67,33 @@ void Casino::Play() {
 		system("CLS");
 		system("pause");
 	}
-	std::cout << "\nCzy chcesz zagraæ ponownie? (0 - nie, 1 - tak): ";
-	std::cin >> _boolValue;
-	if (_boolValue) Play();
+
+	playerOne.printName();
+	playerOne.displayCards();
+	std::cout << "----\n";
+	playerTwo.printName();
+	playerTwo.displayCards();
+
+	if (playerOne.getPoints() > playerTwo.getPoints() && playerOne.getPoints() <= 21) {
+		std::cout << "\n*****\nThe winner is... ";
+		playerOne.printName();
+		std::cout << "\n****\n";
+	}
+	else if (playerOne.getPoints() < playerTwo.getPoints() && playerTwo.getPoints() <= 21) {
+		std::cout << "\n*****\nThe winner is... ";
+		playerTwo.printName();
+		std::cout << "\n****\n";
+	}
+	else if (playerOne.getPoints() == playerTwo.getPoints()) {
+		std::cout << "\ndraw lol\n";
+	}
+	else {
+		std::cout << "\nboth lost\n";
+	}
+
+	//std::cout << "\nCzy chcesz zagraæ ponownie? (0 - nie, 1 - tak): ";
+	//std::cin >> _boolValue;
+	//if (_boolValue) Play();
 	return;
 }
 
@@ -88,8 +112,9 @@ void Casino::Round(Player* _player) {
 	_player->printName();
 	std::cout << std::endl;
 	_player->displayCards();
-	std::cout << "Czy chcesz spasowac? (0 - nie, 1 - tak): ";
+	if (_player->getPoints() > 21) _player->setDidFold(true);
 	if (_player->getDidFold() != true) {
+		std::cout << "Czy chcesz spasowac? (0 - nie, 1 - tak): ";
 		std::cin >> _boolValue;
 		_player->setDidFold(_boolValue);
 	}
