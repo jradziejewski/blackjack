@@ -21,5 +21,6 @@ public:
 	void dealCards(Player* player);
 	Card getCard();
 	void Play();
+	void BeginGame(Player* _player);
 };
 

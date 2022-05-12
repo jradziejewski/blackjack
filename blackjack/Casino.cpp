@@ -56,22 +56,29 @@ Card Casino::getCard() {
 
 void Casino::Play() {
 	bool _boolValue;
-	std::cout << "Player 1: \n";
-	dealCards(&playerOne);
-	playerOne.displayCards();
-	std::cout << "\nPoints : " << playerOne.getPoints();
-	std::cout << "\nPlayer 2: \n";
-	dealCards(&playerTwo);
-	playerTwo.displayCards();
-	std::cout << "\nPoints : " << playerTwo.getPoints();
-	while (!playerOne.getDidFold() && !playerTwo.getDidFold()) {
-		playerOne.getCard(this);
-		playerOne.displayCards();
+	BeginGame(&playerOne);
+	BeginGame(&playerTwo);
+	while (!playerOne.getDidFold() || !playerTwo.getDidFold()) {
+		std::cout << "\nCzy chcesz spasowac? (0 - nie, 1 - tak): ";
 		std::cin >> _boolValue;
 		playerOne.setDidFold(_boolValue);
-		playerTwo.getCard(this);
-		playerTwo.displayCards();
+		if (playerOne.getDidFold() != true) playerOne.getCard(this);
+		playerOne.displayCards();
+
+		std::cout << "\nCzy chcesz spasowac? (0 - nie, 1 - tak): ";
 		std::cin >> _boolValue;
 		playerTwo.setDidFold(_boolValue);
+		if (playerTwo.getDidFold() != true) playerTwo.getCard(this);
+		playerTwo.displayCards();
 	}
+}
+
+void Casino::BeginGame(Player* _player) {
+	_player->setName();
+	_player->printName();
+
+	std::cout << std::endl;
+	dealCards(_player);
+	_player->displayCards();
+	std::cout << "\nPoints : " << _player->getPoints();
 }
