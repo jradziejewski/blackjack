@@ -19,11 +19,11 @@ public:
 	void getCard(Casino* _casino);
 	int getNumOfCards() { return numOfCards; };
 	void displayCards();
-	int getPoints() { calculatePoints(); return points; };
+	int getPoints() { return points; };
 	bool fold() { didFold = true; };
 	void setDidFold(bool value) { didFold = value; };
 	bool getDidFold() { return didFold; };
-	void setName() { std::cin >> name; }
+	void setName();
 	void printName();
 };
 

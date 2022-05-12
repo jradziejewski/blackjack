@@ -22,5 +22,6 @@ public:
 	Card getCard();
 	void Play();
 	void BeginGame(Player* _player);
+	void Round(Player* _player);
 };
 
