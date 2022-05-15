@@ -30,7 +30,7 @@ public:
 	void Play();
 	void BeginGame(Player* _player);
 	void Round(Player* _player);
-	void pickWinner();
+	int pickWinner();
 	void exportResults();
 };
 

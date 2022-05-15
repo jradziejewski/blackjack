@@ -1,2 +1,1 @@
-janusz              Points:   17     Cards: D[=3], 7[B>], 
-marian              Points:   13     Cards: D[<3], Q[=3], 
+mariusz             Points:   10     Cards: 7[<>], Q[=3], 

@@ -55,12 +55,27 @@ Card Casino::getCard() {
 }
 
 void Casino::Play() {
+	system("CLS");
 	std::cout << "Please enter number of players: ";
-	std::cin >> numOfPlayers;
+	char temp;
+	std::cin >> temp;
+	switch (temp) {
+	case '1':
+		numOfPlayers = 1;
+		break;
+	case '2':
+		numOfPlayers = 2;
+		break;
+	case '3':
+		numOfPlayers = 3;
+		break;
+	default: Play();
+	}
 	shuffleDeck();
 	bool _boolValue;
 	BeginGame(&playerOne);
-	BeginGame(&playerTwo);
+	if (numOfPlayers > 1)
+		BeginGame(&playerTwo);
 	if (numOfPlayers > 2)
 		BeginGame(&playerThree);
 	system("pause");
@@ -74,7 +89,7 @@ void Casino::Play() {
 			Round(&playerThree);
 		}
 	}
-	else {
+	else if (numOfPlayers > 1) {
 		while (!playerOne.getDidFold() || !playerTwo.getDidFold()) {
 			system("CLS");
 			Round(&playerOne);
@@ -82,15 +97,34 @@ void Casino::Play() {
 			Round(&playerTwo);
 		}
 	}
+	else {
+		while (!playerOne.getDidFold()) {
+			system("CLS");
+			Round(&playerOne);
+		}
+	}
 	system("CLS");
-	playerOne.displayCards();
-	playerTwo.displayCards();
-	playerThree.displayCards();
-	pickWinner();
+	int result = pickWinner();
+	switch (result) {
+	case 1:
+		std::cout << "The winner is " << playerOne.getName();
+		break;
+	case 2:
+		std::cout << "The winner is " << playerTwo.getName();
+		break;
+	case 3:
+		std::cout << "The winner is " << playerThree.getName();
+		break;
+	default:
+		std::cout << "No one won.";
+		break;
+	}
 	exportResults();
-	std::cout << "\nDo you want to play again? (0 - no, 1 - yes): ";
-	std::cin >> _boolValue;
-	if (_boolValue) Play();
+	std::cout << "\nDo you want to play again? (1 - yes, anything else - no): ";
+	std::cin >> temp;
+	if (temp == '1') {
+		Play();
+	}
 	return;
 }
 
@@ -106,23 +140,35 @@ void Casino::BeginGame(Player* _player) {
 
 void Casino::Round(Player* _player) {
 	bool _boolValue;
+	char temp;
 	system("CLS");
 	_player->printName();
 	std::cout << std::endl;
 	_player->displayCards();
 	if (_player->getPoints() >= 21) _player->setDidFold(true);
 	if (_player->getDidFold() != true) {
-		std::cout << "Do you want to fold? (0 - no, 1 - yes): ";
-		std::cin >> _boolValue;
+		std::cout << "Do you want to fold? (1 - yes, anything else - no): ";
+		std::cin >> temp;
+		switch (temp) {
+		case '1':
+			_boolValue = true;
+			break;
+		default:
+			_boolValue = false;
+			break;
+		}
 		_player->setDidFold(_boolValue);
 	}
 	if (_player->getDidFold() != true) _player->takeCard(this);
 	_player->displayCards();
 }
 
-void Casino::pickWinner() {
+int Casino::pickWinner() {
 	if (playerOne.getPoints() > 21) {
 		playerOne.isWinner = false;
+	}
+	if (numOfPlayers == 1 && playerOne.isWinner != false) {
+		return 1;
 	}
 	if (playerTwo.getPoints() > 21) {
 		playerTwo.isWinner = false;
@@ -130,17 +176,21 @@ void Casino::pickWinner() {
 	if (playerThree.getPoints() > 21) {
 		playerThree.isWinner = false;
 	}
-	if (playerOne.getPoints() == playerTwo.getPoints()) {
-		std::cout << "Draw between player One and Two.";
-		return;
-	}
-	else if (playerOne.getPoints() == playerThree.getPoints()) {
-		std::cout << "Draw between player One and Three.";
-		return;
-	}
-	else if (playerTwo.getPoints() == playerThree.getPoints()) {
-		std::cout << "Draw between player Two and Three.";
-		return;
+
+	if (numOfPlayers > 1) {
+		if (playerOne.getPoints() == playerTwo.getPoints()) {
+			std::cout << "Draw between player One and Two.";
+			return 0;
+		}
+		if (numOfPlayers > 2)
+			if (playerOne.getPoints() == playerThree.getPoints()) {
+				std::cout << "Draw between player One and Three.";
+				return 0;
+			}
+			else if (playerTwo.getPoints() == playerThree.getPoints()) {
+				std::cout << "Draw between player Two and Three.";
+				return 0;
+			}
 	}
 	std::map<int, int> results;
 	if (playerOne.isWinner != false) {
@@ -156,7 +206,7 @@ void Casino::pickWinner() {
 	auto winner = std::max_element(results.begin(), results.end(), [](const auto& x, const auto& y) {
 		return x.second < y.second;
 		});
-	std::cout << "Winner: Player " << winner->first;
+	return winner->first;
 }
 
 std::string convertSuit(char _suit) {
@@ -191,14 +241,16 @@ void Casino::exportResults() {
 		results << card.getFace() << convertSuit(card.getSuit()) << ", ";
 	}
 	results << std::endl;
-	results << std::setw(20) << playerTwo.getName();
-	results << std::setw(10) << "Points: " << playerTwo.getPoints();
-	results << "     Cards: ";
-	for (int i = 0; i < playerTwo.getNumOfCards(); i++) {
-		Card card = playerTwo.getCard(i);
-		results << card.getFace() << convertSuit(card.getSuit()) << ", ";
+	if (numOfPlayers > 1) {
+		results << std::setw(20) << playerTwo.getName();
+		results << std::setw(10) << "Points: " << playerTwo.getPoints();
+		results << "     Cards: ";
+		for (int i = 0; i < playerTwo.getNumOfCards(); i++) {
+			Card card = playerTwo.getCard(i);
+			results << card.getFace() << convertSuit(card.getSuit()) << ", ";
+		}
+		results << std::endl;
 	}
-	results << std::endl;
 	if (numOfPlayers > 2) {
 		results << std::setw(20) << playerThree.getName();
 		results << std::setw(10) << "Points: " << playerThree.getPoints();

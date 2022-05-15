@@ -27,7 +27,14 @@ void Player::displayCards() {
 
 void Player::setName() {
 	std::cout << "Please enter your nickname: ";
-	std::cin >> name;
+	char text[20];
+	std::cin >> text;
+	if (strlen(text) > 20) {
+		std::cout << "Name too long (max 20 characters). ";
+		setName();
+	}
+	strcpy_s(name, text);
+
 }
 
 void Player::printName() {
