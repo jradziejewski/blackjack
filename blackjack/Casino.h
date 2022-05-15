@@ -2,8 +2,10 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>  
+#include <iomanip>
 #include <map>
 #include <algorithm>
+#include <fstream>
 #include "Card.h"
 #include "Player.h"
 
@@ -28,5 +30,6 @@ public:
 	void BeginGame(Player* _player);
 	void Round(Player* _player);
 	void pickWinner();
+	void exportResults();
 };
 
