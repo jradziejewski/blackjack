@@ -16,9 +16,11 @@ private:
 	void calculatePoints();
 public:
 	Player() : numOfCards(0), points(0), didFold(false) {};
+	bool isWinner;
 	void getCard(Casino* _casino);
 	int getNumOfCards() { return numOfCards; };
 	void displayCards();
+	void deleteCards();
 	int getPoints() { return points; };
 	bool fold() { didFold = true; };
 	void setDidFold(bool value) { didFold = value; };

@@ -9,6 +9,14 @@ void Player::getCard(Casino* _casino) {
 	}
 }
 
+void Player::deleteCards() {
+	for (int i = 0; i < getNumOfCards(); i++) {
+		cards[i] = 0;
+	}
+	numOfCards = 0;
+	points = 0;
+}
+
 void Player::displayCards() {
 	for (int i = 0; i < numOfCards; i++) {
 		cards[i].display();
@@ -18,7 +26,7 @@ void Player::displayCards() {
 }
 
 void Player::setName() {
-	std::cout << "Wpisz swoje imie: ";
+	std::cout << "Please enter your nickname: ";
 	std::cin >> name;
 }
 
