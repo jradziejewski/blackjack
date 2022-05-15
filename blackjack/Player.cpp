@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Casino.h"
 
-void Player::getCard(Casino* _casino) {
+void Player::takeCard(Casino* _casino) {
 	if (numOfCards < 10) {
 		cards[numOfCards] = _casino->getCard();
 		points += cards[numOfCards].getValue();

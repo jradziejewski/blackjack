@@ -40,8 +40,8 @@ void Casino::displayDeck() {
 void Casino::dealCards(Player* _player) {
 	if (_player->getNumOfCards() >= 10) return;
 
-	_player->getCard(this);
-	_player->getCard(this);
+	_player->takeCard(this);
+	_player->takeCard(this);
 }
 
 Card Casino::getCard() {
@@ -87,7 +87,7 @@ void Casino::Play() {
 	playerTwo.displayCards();
 	playerThree.displayCards();
 	pickWinner();
-
+	exportResults();
 	std::cout << "\nDo you want to play again? (0 - no, 1 - yes): ";
 	std::cin >> _boolValue;
 	if (_boolValue) Play();
@@ -116,7 +116,7 @@ void Casino::Round(Player* _player) {
 		std::cin >> _boolValue;
 		_player->setDidFold(_boolValue);
 	}
-	if (_player->getDidFold() != true) _player->getCard(this);
+	if (_player->getDidFold() != true) _player->takeCard(this);
 	_player->displayCards();
 }
 
@@ -157,4 +157,57 @@ void Casino::pickWinner() {
 		return x.second < y.second;
 		});
 	std::cout << "Winner: Player " << winner->first;
+}
+
+std::string convertSuit(char _suit) {
+	std::string suit;
+	if (_suit == 3) {
+		suit = "[<3]";
+		return suit;
+	}
+	else if (_suit == 4) {
+		suit = "[<>]";
+		return suit;
+	}
+	else if (_suit == 5) {
+		suit = "[=3]";
+		return suit;
+	}
+	else if (_suit == 6) {
+		return "[B>]";
+	}
+}
+
+void Casino::exportResults() {
+	std::ofstream results;
+	results.open("results.txt");
+	results.setf(std::ios::left);
+	results.setf(std::ios::uppercase);
+	results << std::setw(20) << playerOne.getName();
+	results << std::setw(10) << "Points: " << playerOne.getPoints();
+	results << "     Cards: ";
+	for (int i = 0; i < playerOne.getNumOfCards(); i++) {
+		Card card = playerOne.getCard(i);
+		results << card.getFace() << convertSuit(card.getSuit()) << ", ";
+	}
+	results << std::endl;
+	results << std::setw(20) << playerTwo.getName();
+	results << std::setw(10) << "Points: " << playerTwo.getPoints();
+	results << "     Cards: ";
+	for (int i = 0; i < playerTwo.getNumOfCards(); i++) {
+		Card card = playerTwo.getCard(i);
+		results << card.getFace() << convertSuit(card.getSuit()) << ", ";
+	}
+	results << std::endl;
+	if (numOfPlayers > 2) {
+		results << std::setw(20) << playerThree.getName();
+		results << std::setw(10) << "Points: " << playerThree.getPoints();
+		results << "     Cards: ";
+		for (int i = 0; i < playerThree.getNumOfCards(); i++) {
+			Card card = playerThree.getCard(i);
+			results << card.getFace() << convertSuit(card.getSuit()) << ", ";
+		}
+		results << std::endl;
+	}
+	results.close();
 }

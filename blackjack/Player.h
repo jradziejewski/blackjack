@@ -17,7 +17,7 @@ private:
 public:
 	Player() : numOfCards(0), points(0), didFold(false) {};
 	bool isWinner;
-	void getCard(Casino* _casino);
+	void takeCard(Casino* _casino);
 	int getNumOfCards() { return numOfCards; };
 	void displayCards();
 	void deleteCards();
@@ -27,5 +27,8 @@ public:
 	bool getDidFold() { return didFold; };
 	void setName();
 	void printName();
+	//Write to file helpers
+	char* getName() { return name; };
+	Card getCard(int index) { return cards[index]; };
 };
 
